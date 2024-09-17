@@ -1,5 +1,7 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CountriesService } from './countries.service';
+import { ApiRequest, PopulationData, YearPopulation } from './countries.interface';
+import { Observable } from 'rxjs';
 
 @Controller('/countries')
 export class CountriesController {
@@ -10,19 +12,20 @@ export class CountriesController {
         return this.countriesService.getAvailableCountries();
     }
 
-    @Get('/:code')
-    async getCountryInfo(@Param('code') code:string) {
-        return this.countriesService.getBorderCountries(code);
+    @Get('/:countryCode')
+    async getBorderCountries(@Param('countryCode') countryCode: string) {
+
+        return this.countriesService.getBorderCountries(countryCode);
     }
 
-    @Get('/:population')
-    async getPopulationData(@Param('population')population: number) {
-        return this.countriesService.getPopulationData(population);
+    @Post('/population')
+    async getHistoricalPopulationData(@Body() country: ApiRequest) {
+        return this.countriesService.getHistoricalPopulationData(country);
     }
 
-    @Get('/:images')
-    async getgetCountryFlag(@Param('flag') url: string) {
-        return this.countriesService.getFlagUrl(url);
+    @Post('/flag/images')
+    async getCountryFlag(@Body() iso2: string) {
+        return this.countriesService.getFlagUrl(iso2);
     }
 
 

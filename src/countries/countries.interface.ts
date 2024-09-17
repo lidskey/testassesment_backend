@@ -11,9 +11,20 @@ export interface CountryInfo {
     borders: null
 }
 
+export interface ApiRequest{
+    country: string
+}
+
+export interface YearPopulation{
+    year: number
+    value: number
+}
+
 export interface PopulationData {
-    year: number;
-    population: number;
+    country: string
+    code: string
+    iso3: string
+    populationCounts: YearPopulation[]
 }
 
 export interface FlagService {
